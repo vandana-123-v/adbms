@@ -1,0 +1,36 @@
+CREATE TABLE employee (emp_id INT PRIMARY KEY,emp_name VARCHAR(50),department VARCHAR(50),salary DECIMAL(10,2));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> INSERT INTO employee VALUES
+    -> (1,'Arun','HR',30000),
+    -> (2,'Meera','IT',45000),
+    -> (3,'Rahul','Finance',40000);
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE emp_history (emp_id INT,emp_name VARCHAR(50),department VARCHAR(50),salary DECIMAL(10,2),date_of_deletion DATE);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DELIMITER //
+mysql> 
+mysql> CREATE TRIGGER emp_delete_trigger
+    -> AFTER DELETE ON employee
+    -> FOR EACH ROW
+    -> BEGIN
+    ->     INSERT INTO emp_history
+    ->     VALUES (OLD.emp_id, OLD.emp_name, OLD.department, OLD.salary, CURDATE());
+    -> END //
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> DELETE FROM employee WHERE emp_id = 2;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM emp_history;
++--------+----------+------------+----------+------------------+
+| emp_id | emp_name | department | salary   | date_of_deletion |
++--------+----------+------------+----------+------------------+
+|      2 | Meera    | IT         | 45000.00 | 2026-03-10       |
++--------+----------+------------+----------+------------------+
+

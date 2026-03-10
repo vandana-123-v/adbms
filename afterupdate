@@ -1,0 +1,64 @@
+CREATE TABLE student (
+    ->     stud_id INT PRIMARY KEY,
+    ->     name VARCHAR(50),
+    ->     mark1 INT,
+    ->     mark2 INT,
+    ->     mark3 INT,
+    ->     total INT,
+    ->     percentage DECIMAL(5,2),
+    ->     grade CHAR(1)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO student VALUES
+    -> (1,'Arun',70,75,80,NULL,NULL,NULL),
+    -> (2,'Meera',65,60,70,NULL,NULL,NULL);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> DELIMITER //
+mysql> 
+mysql> CREATE TRIGGER student_marks_update
+    -> BEFORE UPDATE ON student
+    -> FOR EACH ROW
+    -> BEGIN
+    ->     DECLARE v_total INT;
+    ->     DECLARE v_percentage DECIMAL(5,2);
+    ->     DECLARE v_grade CHAR(1);
+    -> 
+    ->     SET v_total = NEW.mark1 + NEW.mark2 + NEW.mark3;
+    ->     SET v_percentage = v_total / 3;
+    -> 
+    ->     IF v_percentage >= 90 THEN
+    ->         SET v_grade = 'A';
+    ->     ELSEIF v_percentage >= 75 THEN
+    ->         SET v_grade = 'B';
+    ->     ELSEIF v_percentage >= 60 THEN
+    ->         SET v_grade = 'C';
+    ->     ELSE
+    ->         SET v_grade = 'D';
+    ->     END IF;
+    -> 
+    ->     SET NEW.total = v_total;
+    ->     SET NEW.percentage = v_percentage;
+    ->     SET NEW.grade = v_grade;
+    -> 
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> UPDATE student
+    -> SET mark1 = 85, mark2 = 80, mark3 = 75
+    -> WHERE stud_id = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM student;
++---------+-------+-------+-------+-------+-------+------------+-------+
+| stud_id | name  | mark1 | mark2 | mark3 | total | percentage | grade |
++---------+-------+-------+-------+-------+-------+------------+-------+
+|       1 | Arun  |    85 |    80 |    75 |   240 |      80.00 | B     |
+|       2 | Meera |    65 |    60 |    70 |  NULL |       NULL | NULL  |
++---------+-------+-------+-------+-------+-------+------------+-------+
+

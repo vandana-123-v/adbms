@@ -1,0 +1,27 @@
+CREATE TABLE emp_details (emp_id INT PRIMARY KEY,name VARCHAR(50),job_id VARCHAR(50), salary DECIMAL(10,2));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DELIMITER //
+mysql> 
+mysql> CREATE TRIGGER emp_before_insert
+    -> BEFORE INSERT ON emp_details
+    -> FOR EACH ROW
+    -> BEGIN
+    ->     SET NEW.name = TRIM(NEW.name);
+    ->     SET NEW.job_id = UPPER(NEW.job_id);
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> INSERT INTO emp_details VALUES
+    -> (1,'  Arun Kumar  ','manager',35000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT * FROM emp_details;
++--------+------------+---------+----------+
+| emp_id | name       | job_id  | salary   |
++--------+------------+---------+----------+
+|      1 | Arun Kumar | MANAGER | 35000.00 |
++--------+------------+---------+----------+
+

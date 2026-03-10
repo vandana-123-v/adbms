@@ -1,0 +1,105 @@
+create table employees(emp_id INT,emp_name VARCHAR(100),salary DECIMAL(10,2) );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DELIMITER //
+mysql> 
+mysql> CREATE PROCEDURE IncreaseSalary()
+    -> BEGIN
+    ->     DECLARE done INT DEFAULT 0;
+    ->     DECLARE v_emp_id INT;
+    ->     DECLARE v_salary DECIMAL(10,2);
+    -> 
+    ->     -- Cursor declaration
+    ->     DECLARE emp_cursor CURSOR FOR
+    ->         SELECT emp_id, salary
+    ->         FROM employees
+    ->         WHERE salary < 30000;
+    -> 
+    ->     -- Handler for end of cursor
+    ->     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+    -> 
+    ->     OPEN emp_cursor;
+    -> 
+    ->     read_loop: LOOP
+    ->         FETCH emp_cursor INTO v_emp_id, v_salary;
+    -> 
+    ->         IF done = 1 THEN
+    ->             LEAVE read_loop;
+    ->         END IF;
+    -> 
+    ->         UPDATE employees
+    ->         SET salary = v_salary * 1.10
+    ->         WHERE emp_id = v_emp_id;
+    -> 
+    ->     END LOOP;
+    -> 
+    ->     CLOSE emp_cursor;
+    -> END //
+ERROR 1304 (42000): PROCEDURE IncreaseSalary already exists
+mysql> 
+mysql> DELIMITER ;
+mysql> CALL IncreaseSalary();
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> INSERT INTO employees VALUES
+    -> (1, 'Arun', 25000),
+    -> (2, 'Meera', 32000),
+    -> (3, 'Rahul', 28000),
+    -> (4, 'Anjali', 40000),
+    -> (5, 'Vikram', 29000);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> DELIMITER //
+mysql> 
+mysql> CREATE PROCEDURE IncreaseSalary()
+    -> BEGIN
+    ->     DECLARE done INT DEFAULT 0;
+    ->     DECLARE v_id INT;
+    ->     DECLARE v_salary DECIMAL(10,2);
+    -> 
+    ->     DECLARE emp_cursor CURSOR FOR
+    ->         SELECT emp_id, salary FROM employees WHERE salary < 30000;
+    -> 
+    ->     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+    -> 
+    ->     OPEN emp_cursor;
+    -> 
+    ->     read_loop: LOOP
+    ->         FETCH emp_cursor INTO v_id, v_salary;
+    -> 
+    ->         IF done = 1 THEN
+    ->             LEAVE read_loop;
+    ->         END IF;
+    -> 
+    ->         UPDATE employees
+    ->         SET salary = v_salary * 1.10
+    ->         WHERE emp_id = v_id;
+    -> 
+    ->     END LOOP;
+    -> 
+    ->     CLOSE emp_cursor;
+    -> END //
+ERROR 1304 (42000): PROCEDURE IncreaseSalary already exists
+mysql> 
+mysql> DELIMITER ;
+mysql> CALL IncreaseSalary();
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CALL IncreaseSalary();
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CALL IncreaseSalary(30000);
+ERROR 1318 (42000): Incorrect number of arguments for PROCEDURE pro.IncreaseSalary; expected 0, got 1
+mysql> select * from employees;
++--------+----------+----------+
+| emp_id | emp_name | salary   |
++--------+----------+----------+
+|      1 | Arun     | 30250.00 |
+|      2 | Meera    | 32000.00 |
+|      3 | Rahul    | 30800.00 |
+|      4 | Anjali   | 40000.00 |
+|      5 | Vikram   | 31900.00 |
++--------+----------+----------+
+5 rows in set (0.00 sec)
+

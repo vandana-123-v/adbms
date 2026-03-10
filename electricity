@@ -1,0 +1,75 @@
+CREATE TABLE electricity (cust_id INT PRIMARY KEY,cust_name VARCHAR(50),units INT,bill_amount DECIMAL(10,2));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO electricity VALUES
+    -> (1,'Arun',90,0),
+    -> (2,'Meera',150,0),
+    -> (3,'Rahul',220,0),
+    -> (4,'Anjali',350,0),
+    -> (5,'Vikram',120,0);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> DELIMITER //
+mysql> 
+mysql> CREATE PROCEDURE CalculateBill()
+    -> BEGIN
+    ->     DECLARE done INT DEFAULT 0;
+    ->     DECLARE v_id INT;
+    ->     DECLARE v_units INT;
+    ->     DECLARE v_bill DECIMAL(10,2);
+    -> 
+    ->     DECLARE cur CURSOR FOR
+    ->         SELECT cust_id, units FROM electricity;
+    -> 
+    ->     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+    -> 
+    ->     OPEN cur;
+    -> 
+    ->     read_loop: LOOP
+    ->         FETCH cur INTO v_id, v_units;
+    -> 
+    ->         IF done = 1 THEN
+    ->             LEAVE read_loop;
+    ->         END IF;
+    -> 
+    ->         IF v_units <= 100 THEN
+    ->             SET v_bill = v_units * 1.5;
+    -> 
+    ->         ELSEIF v_units <= 200 THEN
+    ->             SET v_bill = v_units * 2.5;
+    -> 
+    ->         ELSEIF v_units <= 300 THEN
+    ->             SET v_bill = v_units * 4;
+    -> 
+    ->         ELSE
+    ->             SET v_bill = v_units * 6;
+    ->         END IF;
+    -> 
+    ->         UPDATE electricity
+    ->         SET bill_amount = v_bill
+    ->         WHERE cust_id = v_id;
+    -> 
+    ->     END LOOP;
+    -> 
+    ->     CLOSE cur;
+    -> 
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> CALL CalculateBill();
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SELECT * FROM electricity;
++---------+-----------+-------+-------------+
+| cust_id | cust_name | units | bill_amount |
++---------+-----------+-------+-------------+
+|       1 | Arun      |    90 |      135.00 |
+|       2 | Meera     |   150 |      375.00 |
+|       3 | Rahul     |   220 |      880.00 |
+|       4 | Anjali    |   350 |     2100.00 |
+|       5 | Vikram    |   120 |      300.00 |
++---------+-----------+-------+-------------+
+
