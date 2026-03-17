@@ -1,0 +1,167 @@
+test> use collegeDB
+switched to db collegeDB
+collegeDB> db.student.insertMany([
+... {rollno:1, name:"Arun", department:"MCA", semester:2, cgpa:8.1},
+... {rollno:2, name:"Neha", department:"BCA", semester:4, cgpa:7.5},
+... {rollno:3, name:"Rahul", department:"MCA", semester:3, cgpa:8.7},
+... {rollno:4, name:"Anjali", department:"BSc", semester:1, cgpa:7.9},
+... {rollno:5, name:"Kiran", department:"MCA", semester:2, cgpa:8.3},
+... {rollno:6, name:"Meera", department:"BCom", semester:5, cgpa:7.2},
+... {rollno:7, name:"Vijay", department:"MCA", semester:4, cgpa:8.5},
+... {rollno:8, name:"Sneha", department:"BCA", semester:3, cgpa:7.8},
+... {rollno:9, name:"Amit", department:"MCA", semester:2, cgpa:8.0},
+... {rollno:10, name:"Divya", department:"BSc", semester:6, cgpa:8.9}
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('69b910d5af87e39753ce5f47'),
+    '1': ObjectId('69b910d5af87e39753ce5f48'),
+    '2': ObjectId('69b910d5af87e39753ce5f49'),
+    '3': ObjectId('69b910d5af87e39753ce5f4a'),
+    '4': ObjectId('69b910d5af87e39753ce5f4b'),
+    '5': ObjectId('69b910d5af87e39753ce5f4c'),
+    '6': ObjectId('69b910d5af87e39753ce5f4d'),
+    '7': ObjectId('69b910d5af87e39753ce5f4e'),
+    '8': ObjectId('69b910d5af87e39753ce5f4f'),
+    '9': ObjectId('69b910d5af87e39753ce5f50')
+  }
+}
+collegeDB> db.student.find({department: "MCA"})
+[
+  {
+    _id: ObjectId('69b910d5af87e39753ce5f47'),
+    rollno: 1,
+    name: 'Arun',
+    department: 'MCA',
+    semester: 2,
+    cgpa: 8.1
+  },
+  {
+    _id: ObjectId('69b910d5af87e39753ce5f49'),
+    rollno: 3,
+    name: 'Rahul',
+    department: 'MCA',
+    semester: 3,
+    cgpa: 8.7
+  },
+  {
+    _id: ObjectId('69b910d5af87e39753ce5f4b'),
+    rollno: 5,
+    name: 'Kiran',
+    department: 'MCA',
+    semester: 2,
+    cgpa: 8.3
+  },
+  {
+    _id: ObjectId('69b910d5af87e39753ce5f4d'),
+    rollno: 7,
+    name: 'Vijay',
+    department: 'MCA',
+    semester: 4,
+    cgpa: 8.5
+  },
+  {
+    _id: ObjectId('69b910d5af87e39753ce5f4f'),
+    rollno: 9,
+    name: 'Amit',
+    department: 'MCA',
+    semester: 2,
+    cgpa: 8
+  }
+]
+collegeDB> db.student.updateMany(
+...   {department: "MCA"},
+...   {$set: {semester: 1}}
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 5,
+  modifiedCount: 5,
+  upsertedCount: 0
+}
+collegeDB> db.student.find()
+[
+  {
+    _id: ObjectId('69b910d5af87e39753ce5f47'),
+    rollno: 1,
+    name: 'Arun',
+    department: 'MCA',
+    semester: 1,
+    cgpa: 8.1
+  },
+  {
+    _id: ObjectId('69b910d5af87e39753ce5f48'),
+    rollno: 2,
+    name: 'Neha',
+    department: 'BCA',
+    semester: 4,
+    cgpa: 7.5
+  },
+  {
+    _id: ObjectId('69b910d5af87e39753ce5f49'),
+    rollno: 3,
+    name: 'Rahul',
+    department: 'MCA',
+    semester: 1,
+    cgpa: 8.7
+  },
+  {
+    _id: ObjectId('69b910d5af87e39753ce5f4a'),
+    rollno: 4,
+    name: 'Anjali',
+    department: 'BSc',
+    semester: 1,
+    cgpa: 7.9
+  },
+  {
+    _id: ObjectId('69b910d5af87e39753ce5f4b'),
+    rollno: 5,
+    name: 'Kiran',
+    department: 'MCA',
+    semester: 1,
+    cgpa: 8.3
+  },
+  {
+    _id: ObjectId('69b910d5af87e39753ce5f4c'),
+    rollno: 6,
+    name: 'Meera',
+    department: 'BCom',
+    semester: 5,
+    cgpa: 7.2
+  },
+  {
+    _id: ObjectId('69b910d5af87e39753ce5f4d'),
+    rollno: 7,
+    name: 'Vijay',
+    department: 'MCA',
+    semester: 1,
+    cgpa: 8.5
+  },
+  {
+    _id: ObjectId('69b910d5af87e39753ce5f4e'),
+    rollno: 8,
+    name: 'Sneha',
+    department: 'BCA',
+    semester: 3,
+    cgpa: 7.8
+  },
+  {
+    _id: ObjectId('69b910d5af87e39753ce5f4f'),
+    rollno: 9,
+    name: 'Amit',
+    department: 'MCA',
+    semester: 1,
+    cgpa: 8
+  },
+  {
+    _id: ObjectId('69b910d5af87e39753ce5f50'),
+    rollno: 10,
+    name: 'Divya',
+    department: 'BSc',
+    semester: 6,
+    cgpa: 8.9
+  }
+]
+
