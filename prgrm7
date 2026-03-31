@@ -1,0 +1,134 @@
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/backup$  sudo apt update
+sudo apt install gnupg curl -y
+[sudo] password for mca: 
+Hit:1 http://in.archive.ubuntu.com/ubuntu jammy InRelease
+Get:2 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
+Get:3 http://in.archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]
+Get:4 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [3,067 kB]
+Get:5 http://in.archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
+Get:6 http://security.ubuntu.com/ubuntu jammy-security/main i386 Packages [789 kB]
+Get:7 http://in.archive.ubuntu.com/ubuntu jammy-updates/main i386 Packages [971 kB]
+Get:8 http://security.ubuntu.com/ubuntu jammy-security/main amd64 DEP-11 Metadata [54.5 kB]
+Get:9 http://security.ubuntu.com/ubuntu jammy-security/main amd64 c-n-f Metadata [14.1 kB]
+Get:10 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 DEP-11 Metadata [208 B]
+Get:11 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [1,024 kB]
+Get:12 http://security.ubuntu.com/ubuntu jammy-security/universe i386 Packages [689 kB]
+Get:13 http://in.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [3,328 kB]
+Get:14 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 DEP-11 Metadata [125 kB]
+Get:15 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 DEP-11 Metadata [208 B]
+Get:16 http://in.archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [508 kB]
+Get:17 http://in.archive.ubuntu.com/ubuntu jammy-updates/main amd64 DEP-11 Metadata [114 kB]
+Get:18 http://in.archive.ubuntu.com/ubuntu jammy-updates/main amd64 c-n-f Metadata [19.5 kB]
+Get:19 http://in.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 DEP-11 Metadata [212 B]
+Get:20 http://in.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1,261 kB]
+Get:21 http://in.archive.ubuntu.com/ubuntu jammy-updates/universe i386 Packages [800 kB]                                                                                                                   
+Get:22 http://in.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 DEP-11 Metadata [360 kB]                                                                                                           
+Get:23 http://in.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 DEP-11 Metadata [940 B]                                                                                                          
+Get:24 http://in.archive.ubuntu.com/ubuntu jammy-backports/main amd64 DEP-11 Metadata [7,352 B]                                                                                                            
+Get:25 http://in.archive.ubuntu.com/ubuntu jammy-backports/restricted amd64 DEP-11 Metadata [212 B]                                                                                                        
+Get:26 http://in.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 DEP-11 Metadata [7,304 B]                                                                                                        
+Get:27 http://in.archive.ubuntu.com/ubuntu jammy-backports/multiverse amd64 DEP-11 Metadata [212 B]                                                                                                        
+Fetched 13.5 MB in 8s (1,614 kB/s)                                                                                                                                                                         
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+102 packages can be upgraded. Run 'apt list --upgradable' to see them.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+gnupg is already the newest version (2.2.27-3ubuntu2.5).
+gnupg set to manually installed.
+The following NEW packages will be installed:
+  curl
+0 upgraded, 1 newly installed, 0 to remove and 102 not upgraded.
+Need to get 194 kB of archives.
+After this operation, 455 kB of additional disk space will be used.
+Get:1 http://in.archive.ubuntu.com/ubuntu jammy-updates/main amd64 curl amd64 7.81.0-1ubuntu1.23 [194 kB]
+Fetched 194 kB in 1s (141 kB/s)
+Selecting previously unselected package curl.
+(Reading database ... 209057 files and directories currently installed.)
+Preparing to unpack .../curl_7.81.0-1ubuntu1.23_amd64.deb ...
+Unpacking curl (7.81.0-1ubuntu1.23) ...
+Setting up curl (7.81.0-1ubuntu1.23) ...
+Processing triggers for man-db (2.10.2-1) ...
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/backup$ curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | \
+sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/backup$ echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/8.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
+deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/8.0 multiverse
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/backup$ sudo apt update
+sudo apt install mongodb-database-tools -y
+Hit:1 http://in.archive.ubuntu.com/ubuntu jammy InRelease           
+Hit:2 http://in.archive.ubuntu.com/ubuntu jammy-updates InRelease   
+Get:3 https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/8.0 InRelease [3,005 B]
+Hit:4 http://security.ubuntu.com/ubuntu jammy-security InRelease                 
+Hit:5 http://in.archive.ubuntu.com/ubuntu jammy-backports InRelease
+Get:6 https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/8.0/multiverse arm64 Packages [68.2 kB]
+Get:7 https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/8.0/multiverse amd64 Packages [68.7 kB]
+Fetched 140 kB in 2s (67.8 kB/s)
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+103 packages can be upgraded. Run 'apt list --upgradable' to see them.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following NEW packages will be installed:
+  mongodb-database-tools
+0 upgraded, 1 newly installed, 0 to remove and 103 not upgraded.
+Need to get 60.7 MB of archives.
+After this operation, 0 B of additional disk space will be used.
+Get:1 https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/8.0/multiverse amd64 mongodb-database-tools amd64 100.15.0 [60.7 MB]
+Fetched 60.7 MB in 6s (9,828 kB/s)                                                                                                                                                                         
+Selecting previously unselected package mongodb-database-tools.
+(Reading database ... 209064 files and directories currently installed.)
+Preparing to unpack .../mongodb-database-tools_100.15.0_amd64.deb ...
+Unpacking mongodb-database-tools (100.15.0) ...
+Setting up mongodb-database-tools (100.15.0) ...
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/backup$ mongodump --version
+mongodump version: 100.9.4
+git version: ce6af0fefca324ad5d9cb689d335130f48c99699
+Go version: go1.20.12
+   os: linux
+   arch: amd64
+   compiler: gc
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/backup$ mongodump --out ~/backup
+2026-03-31T15:05:17.181+0530	writing admin.system.version to /home/mca/backup/admin/system.version.bson
+2026-03-31T15:05:17.182+0530	done dumping admin.system.version (1 document)
+2026-03-31T15:05:17.182+0530	writing college.class to /home/mca/backup/college/class.bson
+2026-03-31T15:05:17.183+0530	writing inventory.products to /home/mca/backup/inventory/products.bson
+2026-03-31T15:05:17.183+0530	writing collegeDB.student to /home/mca/backup/collegeDB/student.bson
+2026-03-31T15:05:17.183+0530	writing mongodbackup.collection1 to /home/mca/backup/mongodbackup/collection1.bson
+2026-03-31T15:05:17.185+0530	done dumping mongodbackup.collection1 (1 document)
+2026-03-31T15:05:17.185+0530	writing mongodbackup.collection2 to /home/mca/backup/mongodbackup/collection2.bson
+2026-03-31T15:05:17.186+0530	done dumping college.class (20 documents)
+2026-03-31T15:05:17.186+0530	done dumping mongodbackup.collection2 (1 document)
+2026-03-31T15:05:17.186+0530	writing college.Class to /home/mca/backup/college/Class.bson
+2026-03-31T15:05:17.186+0530	writing projectDB.projects to /home/mca/backup/projectDB/projects.bson
+2026-03-31T15:05:17.188+0530	done dumping inventory.products (2 documents)
+2026-03-31T15:05:17.189+0530	done dumping college.Class (0 documents)
+2026-03-31T15:05:17.191+0530	done dumping collegeDB.student (10 documents)
+2026-03-31T15:05:17.192+0530	done dumping projectDB.projects (0 documents)
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/backup$ sudo systemctl start mongod
+[sudo] password for mca: 
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/backup$ sudo systemctl enable mongod
+Created symlink /etc/systemd/system/multi-user.target.wants/mongod.service → /lib/systemd/system/mongod.service.
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/backup$ mongodump
+2026-03-31T15:20:37.870+0530	writing admin.system.version to dump/admin/system.version.bson
+2026-03-31T15:20:37.871+0530	done dumping admin.system.version (1 document)
+2026-03-31T15:20:37.872+0530	writing collegeDB.student to dump/collegeDB/student.bson
+2026-03-31T15:20:37.872+0530	writing college.class to dump/college/class.bson
+2026-03-31T15:20:37.873+0530	writing inventory.products to dump/inventory/products.bson
+2026-03-31T15:20:37.873+0530	writing mongodbackup.collection1 to dump/mongodbackup/collection1.bson
+2026-03-31T15:20:37.873+0530	done dumping collegeDB.student (10 documents)
+2026-03-31T15:20:37.874+0530	done dumping college.class (20 documents)
+2026-03-31T15:20:37.874+0530	done dumping inventory.products (2 documents)
+2026-03-31T15:20:37.874+0530	done dumping mongodbackup.collection1 (1 document)
+2026-03-31T15:20:37.874+0530	writing mongodbackup.collection2 to dump/mongodbackup/collection2.bson
+2026-03-31T15:20:37.874+0530	writing college.Class to dump/college/Class.bson
+2026-03-31T15:20:37.874+0530	writing projectDB.projects to dump/projectDB/projects.bson
+2026-03-31T15:20:37.874+0530	done dumping college.Class (0 documents)
+2026-03-31T15:20:37.875+0530	done dumping projectDB.projects (0 documents)
+2026-03-31T15:20:37.875+0530	done dumping mongodbackup.collection2 (1 document)
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/backup$ ^C
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/backup$ 
+
